@@ -62,7 +62,12 @@ export function SiteHeader({ currentSlug = '' }: SiteHeaderProps) {
   const [dropdownPinned, setDropdownPinned] = useState(false);
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const menuOpenRef = useRef(false);
+  const previousBodyOverflowRef = useRef<string | null>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const suppressFocusOpenRef = useRef(false);
 
@@ -95,20 +100,44 @@ export function SiteHeader({ currentSlug = '' }: SiteHeaderProps) {
     setMobileSolutionsOpen(false);
   }
 
-  // Close dropdown on click outside
+  useEffect(() => {
+    menuOpenRef.current = menuOpen;
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const mobileQuery = window.matchMedia('(max-width: 850px)');
+    const handleViewportChange = (event: MediaQueryListEvent) => {
+      if (!event.matches) closeMobileNavigation();
+    };
+    mobileQuery.addEventListener('change', handleViewportChange);
+    return () => mobileQuery.removeEventListener('change', handleViewportChange);
+  }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const frame = window.requestAnimationFrame(() => {
+      navRef.current?.querySelector<HTMLElement>('a, button')?.focus();
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [menuOpen]);
+
+  // Close open navigation surfaces on outside click or Escape.
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (menuOpenRef.current && headerRef.current && !headerRef.current.contains(event.target as Node)) {
+        closeMobileNavigation();
+      } else if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         closeSolutions();
       }
     }
     function handleEscape(event: KeyboardEvent) {
-        if (event.key === 'Escape') {
-          suppressFocusOpenRef.current = true;
-          closeSolutions();
-          closeMobileNavigation();
-          triggerRef.current?.focus();
-        }
+      if (event.key === 'Escape') {
+        const wasMenuOpen = menuOpenRef.current;
+        suppressFocusOpenRef.current = true;
+        closeSolutions();
+        closeMobileNavigation();
+        (wasMenuOpen ? menuToggleRef.current : triggerRef.current)?.focus();
+      }
     }
     document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('keydown', handleEscape);
@@ -122,20 +151,25 @@ export function SiteHeader({ currentSlug = '' }: SiteHeaderProps) {
   // Prevent scroll when mobile menu is open
   useEffect(() => {
     if (menuOpen) {
+      previousBodyOverflowRef.current = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+    } else if (previousBodyOverflowRef.current !== null) {
+      document.body.style.overflow = previousBodyOverflowRef.current;
+      previousBodyOverflowRef.current = null;
     }
     return () => {
-      document.body.style.overflow = '';
+      if (previousBodyOverflowRef.current !== null) {
+        document.body.style.overflow = previousBodyOverflowRef.current;
+        previousBodyOverflowRef.current = null;
+      }
     };
   }, [menuOpen]);
 
   const isSolutionsActive = currentSlug !== '' && currentSlug !== 'home';
 
   return (
-    <header className={`site-header site-header-modern ${menuOpen ? 'is-menu-open' : ''}`} data-current-slug={currentSlug} role="banner">
-      <Link href="/" className="brand" aria-label="Surya Sangam - solar solutions, home">
+    <header ref={headerRef} className={`site-header site-header-modern ${menuOpen ? 'is-menu-open' : ''}`} data-current-slug={currentSlug} role="banner">
+      <Link href="/" className="brand" aria-label="Surya Sangam - solar solutions, home" onClick={closeMobileNavigation}>
         <span className="brand-mark">
           <SolarMark />
         </span>
@@ -146,12 +180,20 @@ export function SiteHeader({ currentSlug = '' }: SiteHeaderProps) {
 
       {/* Mobile Menu Toggle Button */}
       <button
+        ref={menuToggleRef}
         type="button"
         className={`menu-toggle ${menuOpen ? 'is-active' : ''}`}
         aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
         aria-expanded={menuOpen}
         aria-controls="site-navigation"
-        onClick={() => (menuOpen ? closeMobileNavigation() : setMenuOpen(true))}
+        onClick={() => {
+          if (menuOpen) {
+            closeMobileNavigation();
+          } else {
+            closeSolutions();
+            setMenuOpen(true);
+          }
+        }}
       >
         <span />
         <span />
@@ -159,11 +201,12 @@ export function SiteHeader({ currentSlug = '' }: SiteHeaderProps) {
 
       {/* Desktop & Mobile Navigation */}
       <nav
+        ref={navRef}
         id="site-navigation"
-        className={`main-nav ${menuOpen ? 'open' : ''}`}
+        className={`ss-main-nav ${menuOpen ? 'open' : ''}`}
         aria-label="Main site navigation"
       >
-        <div className="nav-primary-links">
+        <div className="ss-nav-primary-links">
           <Link href="/#top" onClick={closeMobileNavigation}>
             Home
           </Link>
@@ -176,7 +219,7 @@ export function SiteHeader({ currentSlug = '' }: SiteHeaderProps) {
 
           {/* Desktop Solutions Dropdown */}
           <div
-            className={`solutions-nav-container ${dropdownOpen ? 'is-open' : ''}`}
+            className={`ss-solutions-nav-container ${dropdownOpen ? 'is-open' : ''}`}
             ref={dropdownRef}
             onMouseEnter={openSolutions}
             onMouseLeave={closeSolutionsSoon}
@@ -315,19 +358,24 @@ export function SiteHeader({ currentSlug = '' }: SiteHeaderProps) {
         </div>
 
         {/* Mobile Accordion for Solutions */}
-        <div className="mobile-solutions-accordion">
+          <div className="ss-mobile-solutions-accordion">
           <button
             type="button"
             className={`mobile-solutions-toggle ${mobileSolutionsOpen ? 'is-expanded' : ''}`}
-            onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
+            onClick={() => setMobileSolutionsOpen((isOpen) => !isOpen)}
             aria-expanded={mobileSolutionsOpen}
+            aria-controls="mobile-solutions-list"
           >
             <span>Solutions &amp; Frameworks</span>
             <span className="accordion-icon">{mobileSolutionsOpen ? '−' : '+'}</span>
           </button>
 
-          {mobileSolutionsOpen && (
-            <div className="mobile-solutions-list">
+          <div
+            id="mobile-solutions-list"
+            className={mobileSolutionsOpen ? 'mobile-solutions-list is-open' : 'mobile-solutions-list'}
+            hidden={!mobileSolutionsOpen}
+            aria-hidden={!mobileSolutionsOpen}
+          >
               <p className="mobile-group-label">SECTOR SOLUTIONS</p>
               {sectorSolutions.map((item) => (
                 <Link
@@ -363,12 +411,11 @@ export function SiteHeader({ currentSlug = '' }: SiteHeaderProps) {
               >
                 <span>View All Solutions Overview</span>
               </Link>
-            </div>
-          )}
+          </div>
         </div>
 
         <a
-          className="nav-contact"
+          className="ss-nav-contact"
           href="mailto:customer.support@suryasangam.com"
           onClick={closeMobileNavigation}
         >

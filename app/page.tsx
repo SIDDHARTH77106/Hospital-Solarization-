@@ -40,6 +40,61 @@ function Reveal({ children, className = '' }: { children: React.ReactNode; class
 export default function Home() {
   const [activeOffering, setActiveOffering] = useState(0);
   const [mode, setMode] = useState<'residential' | 'commercial'>('residential');
+  const [pincode, setPincode] = useState('');
+  const [monthlyBill, setMonthlyBill] = useState('');
+  const [calcMessage, setCalcMessage] = useState('');
+  const [calcStatus, setCalcStatus] = useState<'idle' | 'error'>('idle');
+  const [isLocating, setIsLocating] = useState(false);
+
+  function clearCalcMessage() {
+    if (calcMessage || calcStatus !== 'idle') {
+      setCalcMessage('');
+      setCalcStatus('idle');
+    }
+  }
+
+  function handleCalculate() {
+    const normalizedPincode = pincode.replace(/\D/g, '');
+    const normalizedBill = Number(monthlyBill.replace(/,/g, '').trim());
+
+    if (!/^\d{6}$/.test(normalizedPincode)) {
+      setCalcStatus('error');
+      setCalcMessage('Enter a valid six-digit Indian pincode.');
+      return;
+    }
+
+    if (!Number.isFinite(normalizedBill) || normalizedBill <= 0) {
+      setCalcStatus('error');
+      setCalcMessage('Enter your monthly electricity bill as a positive amount.');
+      return;
+    }
+
+    setCalcStatus('error');
+    setCalcMessage(`The ${mode} savings estimator is not configured yet. A calculation formula or estimator API is required before a reliable result can be shown.`);
+  }
+
+  function handleLocate() {
+    if (!('geolocation' in navigator)) {
+      setCalcStatus('error');
+      setCalcMessage('Location is unavailable in this browser. Enter your pincode manually.');
+      return;
+    }
+
+    setIsLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      () => {
+        setIsLocating(false);
+        setCalcStatus('error');
+        setCalcMessage('Location permission was granted, but pincode lookup is not configured. Enter your pincode manually.');
+      },
+      (error) => {
+        setIsLocating(false);
+        setCalcStatus('error');
+        setCalcMessage(error.code === error.PERMISSION_DENIED ? 'Location permission was denied. Enter your pincode manually.' : 'Location could not be determined. Enter your pincode manually.');
+      },
+      { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 },
+    );
+  }
 
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
@@ -89,7 +144,7 @@ export default function Home() {
 
         <section className="trust-strip" id="trust"><div className="ss-container trust-inner"><p className="ss-kicker">TRUSTED ECOSYSTEM</p><div className="partner-marquee" aria-label="Trusted ecosystem partners"><div className="partner-list partner-marquee-track">{[...partners, ...partners].map((partner, index) => <span key={`${partner}-${index}`} aria-hidden={index >= partners.length}><i />{partner}</span>)}</div></div></div></section>
 
-        <section className="calc-section" id="surya-calc"><div className="ss-container calc-grid"><Reveal className="calc-copy"><p className="ss-kicker light"><span className="sun-pip" /> SURYACALC · SOLAR SUBSIDY &amp; ROI</p><h2>See what your rooftop can do.</h2><p>Estimate your system, subsidy and savings.</p><div className="calc-points"><span><Icon name="calculator" /> Simple estimate</span><span><Icon name="shield" /> Clear guidance</span></div><a className="ss-button ss-button-white" href="#contact">Get an advanced quote <Icon name="arrow" /></a></Reveal><Reveal className="calc-card"><div className="calc-card-top"><span className="calc-card-title"><span className="calc-sun">☼</span> SuryaCalc</span><span className="calc-live"><i /> live estimate</span></div><div className="calc-tabs" role="tablist" aria-label="Property type"><button className={mode === 'residential' ? 'active' : ''} onClick={() => setMode('residential')} role="tab" aria-selected={mode === 'residential'}><Icon name="home" /> Residential</button><button className={mode === 'commercial' ? 'active' : ''} onClick={() => setMode('commercial')} role="tab" aria-selected={mode === 'commercial'}><Icon name="building" /> Commercial</button></div><div className="calc-field"><label htmlFor="pincode">Location</label><div className="input-row"><input id="pincode" placeholder="Enter pincode" inputMode="numeric" /><button type="button">Locate</button></div><small>For sunlight and subsidy details.</small></div><div className="calc-field"><label htmlFor="bill">Average monthly bill</label><div className="input-row"><span className="input-prefix">₹</span><input id="bill" placeholder={mode === 'residential' ? '2,000' : '12,000'} inputMode="numeric" /><span className="input-suffix">/ month</span></div></div><div className="calc-preview"><span>Potential savings</span><strong>{mode === 'residential' ? '₹ 1,440' : '₹ 8,640'} <small>/ month</small></strong><div className="preview-meter"><span style={{ width: mode === 'residential' ? '64%' : '78%' }} /></div><small>Estimate · actual results may vary</small></div><button type="button" className="calc-submit">Calculate my estimate <Icon name="arrow" /></button></Reveal></div></section>
+        <section className="calc-section" id="surya-calc"><div className="ss-container calc-grid"><Reveal className="calc-copy"><p className="ss-kicker light"><span className="sun-pip" /> SURYACALC · SOLAR SUBSIDY &amp; ROI</p><h2>See what your rooftop can do.</h2><p>Estimate your system, subsidy and savings.</p><div className="calc-points"><span><Icon name="calculator" /> Simple estimate</span><span><Icon name="shield" /> Clear guidance</span></div><a className="ss-button ss-button-white" href="#contact">Get an advanced quote <Icon name="arrow" /></a></Reveal><Reveal className="calc-card"><div className="calc-card-top"><span className="calc-card-title"><span className="calc-sun">☼</span> SuryaCalc</span><span className="calc-live"><i /> live estimate</span></div><div className="calc-tabs" role="tablist" aria-label="Property type"><button className={mode === 'residential' ? 'active' : ''} onClick={() => { setMode('residential'); clearCalcMessage(); }} role="tab" aria-selected={mode === 'residential'}><Icon name="home" /> Residential</button><button className={mode === 'commercial' ? 'active' : ''} onClick={() => { setMode('commercial'); clearCalcMessage(); }} role="tab" aria-selected={mode === 'commercial'}><Icon name="building" /> Commercial</button></div><div className="calc-field"><label htmlFor="pincode">Location</label><div className="input-row"><input id="pincode" value={pincode} onChange={(event) => { setPincode(event.target.value.replace(/\D/g, '').slice(0, 6)); clearCalcMessage(); }} placeholder="Enter pincode" inputMode="numeric" autoComplete="postal-code" aria-invalid={calcStatus === 'error' ? 'true' : undefined} /><button type="button" onClick={handleLocate} disabled={isLocating}>{isLocating ? 'Locating…' : 'Locate'}</button></div><small>For sunlight and subsidy details.</small></div><div className="calc-field"><label htmlFor="bill">Average monthly bill</label><div className="input-row"><span className="input-prefix">₹</span><input id="bill" value={monthlyBill} onChange={(event) => { setMonthlyBill(event.target.value.replace(/[^\d,]/g, '')); clearCalcMessage(); }} placeholder={mode === 'residential' ? '2,000' : '12,000'} inputMode="decimal" autoComplete="off" aria-invalid={calcStatus === 'error' ? 'true' : undefined} /><span className="input-suffix">/ month</span></div></div><div className="calc-preview" aria-live="polite"><span>Potential savings</span><strong>{calcStatus === 'error' ? 'Unavailable' : '—'}</strong><div className="preview-meter"><span style={{ width: '0%' }} /></div><small>{calcMessage || 'Enter your details to request an estimate.'}</small></div><button type="button" className="calc-submit" onClick={handleCalculate}>Calculate my estimate <Icon name="arrow" /></button></Reveal></div></section>
 
         <section className="offerings-section" id="solutions"><div className="ss-container"><Reveal className="section-intro"><div><p className="ss-kicker">OUR OFFERINGS</p><h2>Discover your <span>perfect fit.</span></h2></div><p>Choose a solar path for your home, community or business.</p></Reveal><Reveal className="offering-layout"><div className="offering-list">{offerings.map((offering, index) => <button className={`offering-tab ${activeOffering === index ? 'active' : ''}`} key={offering.id} onClick={() => setActiveOffering(index)}><span className="offering-tab-icon"><Icon name={offering.icon} /></span><span><small>{offering.eyebrow}</small><strong>{offering.title}</strong></span><Icon name="chevron" /></button>)}</div><article className={`offering-feature offering-feature-${active.id}`}><img key={active.id} src={active.image} alt={active.alt} loading="lazy" decoding="async" /><div className="offering-overlay"><div><span className="offering-tag">{active.tag}</span><h3>{active.title}</h3><p>{active.copy}</p></div><a href="#contact" aria-label={`Learn more about ${active.eyebrow.toLowerCase()}`}><Icon name="arrow" /></a></div></article></Reveal></div></section>
 
