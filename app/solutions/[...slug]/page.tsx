@@ -9,13 +9,43 @@ import { DeferredSolutionVisual } from '../../components/DeferredSolutionVisual'
 import { SolutionProgressNav } from '../../components/SolutionProgressNav';
 import { DeferredVideo } from '../../components/DeferredVideo';
 import { Typewriter } from '../../components/Typewriter';
+import { AnimatedCounter } from '../../components/AnimatedCounter';
 import { AnnouncementBar, SiteFooter } from '../../components/SiteChrome';
 
 type RouteProps = { params: Promise<{ slug: string[] }> };
-type HeroVisual = { image: string; eyebrow: string; caption: string; stat: string; alt: string };
+type HeroProof = { value: number; suffix?: string; label: string };
+type HeroVisual = {
+  image: string;
+  eyebrow: string;
+  caption: string;
+  stat: string;
+  alt: string;
+  proof?: HeroProof[];
+  heroSupport?: string;
+  heroBody?: string;
+  primaryCta?: string;
+  secondaryCta?: string;
+  showMediaOverlay?: boolean;
+};
 
 const heroVisuals: Record<string, HeroVisual> = {
-  'hospital-solarization': { image: '/images/surya-healthcare.jpg', eyebrow: 'HEALTHCARE ENERGY TRANSITION', caption: 'Power continuity for care', stat: '24/7 critical-load planning', alt: 'Hospital energy planning and rooftop solar for critical healthcare power' },
+  'hospital-solarization': {
+    image: '/images/surya-healthcare.jpg',
+    eyebrow: 'HEALTHCARE ENERGY TRANSITION',
+    caption: 'Power continuity for care',
+    stat: '24/7 critical-load planning',
+    alt: 'Hospital energy planning and rooftop solar for critical healthcare power',
+    proof: [
+      { value: 150, suffix: ' kW', label: 'Solarized' },
+      { value: 10, label: 'CHCs' },
+      { value: 19, label: 'Days' },
+    ],
+    heroSupport: 'Intelligent Solar Energy Solutions for Hospitals & Healthcare Infrastructure',
+    heroBody: 'Surya Sangam enables hospitals and healthcare institutions to transition towards cleaner, more resilient energy infrastructure through solar assessment, system design, project execution, monitoring and impact measurement. From government Community Health Centres to private hospitals and healthcare networks, we build facility-specific solarization strategies designed around operational requirements, energy consumption and long-term sustainability goals.',
+    primaryCta: 'Request a Solar Assessment',
+    secondaryCta: 'Talk to Our Energy Team',
+    showMediaOverlay: false,
+  },
   'education-institutional-solarization': { image: '/images/surya-education.jpg', eyebrow: 'CAMPUS ENERGY TRANSITION', caption: 'Learning environments with more resilience', stat: 'Multi-site campus planning', alt: 'Education campus solar planning for schools, colleges and institutional facilities' },
   'industrial-msme-solarization': { image: '/images/surya-business.jpg', eyebrow: 'BUSINESS ENERGY TRANSITION', caption: 'A rooftop that works as hard as you do', stat: 'Designed for operating savings', alt: 'Industrial and MSME rooftop solar planning for business energy savings' },
   'infrastructure/water': { image: '/images/surya-water.jpg', eyebrow: 'WATER ENERGY TRANSITION', caption: 'Keep essential systems moving', stat: 'Treatment + pumping + irrigation', alt: 'Solar energy infrastructure for water treatment, pumping and irrigation' },
@@ -50,11 +80,11 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
   const solution = getSolution(readSlug(slug));
   if (!solution) return {};
   const visual = heroVisuals[solution.slug] ?? heroVisuals['hospital-solarization'];
-  const title = `${solution.seoKeyword ?? solution.navLabel} | Surya Sangam`;
+  const title = solution.seoTitle ?? `${solution.seoKeyword ?? solution.navLabel} | Surya Sangam`;
   const description = solution.metaDescription ?? `${solution.navLabel} solutions from Surya Sangam, covering assessment, design, execution, monitoring and measurable impact.`;
   const canonical = solution.url;
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: { canonical },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-video-preview': -1, 'max-snippet': -1 } },
@@ -118,25 +148,39 @@ function cleanSectionKicker(kicker: string) {
   return kicker.replace(/^SECTION\s+\d+\s+—\s*/i, '').replace(/^\d+\s+—\s*/, '').trim();
 }
 
+const hospitalSectionKeywords: Record<string, string> = {
+  '03 — PROBLEM': 'Solar Energy for Hospitals · Healthcare Solar Energy',
+  '05 — PROVEN EXECUTION': 'Hospital Solarization Projects',
+  '06 — DIGITAL ECOSYSTEM': 'Hospital Solar Power Solutions',
+  '07 — HEALTHCARE SOLUTIONS': 'Solar + Battery for Hospitals · Off-Grid Solar for Healthcare · Solar Solutions for Healthcare Infrastructure',
+  '08 — WHO WE SERVE': 'Government Hospital Solarization · Private Hospital Solar Solutions',
+};
+
+function CtaLabel({ text }: { text: string }) {
+  return <>{text}{text.trim().endsWith('→') ? null : <> <span>→</span></>}</>;
+}
+
 function HeroCopy({ visual, title, heroLead }: { visual: HeroVisual; title: string; heroLead: string }) {
   return <div className="solution-detail-hero-copy">
     <p className="ss-kicker"><span className="sun-pip" /> {visual.eyebrow}</p>
     <h1>{title}</h1>
-    <p>{heroLead}</p>
+    <p>{visual.heroSupport ?? heroLead}</p>
+    {visual.heroBody && <p className="hero-detail-body">{visual.heroBody}</p>}
     <div className="detail-hero-actions">
-      <a className="ss-button ss-button-yellow" href="mailto:customer.support@suryasangam.com">Start an assessment <span>→</span></a>
-      <a className="ss-text-link" href="#section-1">Explore the pathway <span>↓</span></a>
+      <a className="ss-button ss-button-yellow" href="mailto:customer.support@suryasangam.com">{visual.primaryCta ?? 'Start an assessment'} <span>→</span></a>
+      <a className="ss-text-link" href={visual.secondaryCta ? '#section-2' : '#section-1'}>{visual.secondaryCta ?? 'Explore the pathway'} <span>{visual.secondaryCta ? '→' : '↓'}</span></a>
     </div>
-    <div className="detail-hero-stat"><strong>{visual.stat}</strong><span>Built around your facility and priorities.</span></div>
-    <div className="detail-typewriter"><span className="signal-dot" /><Typewriter phrases={['ASSESS THE FACILITY', 'DESIGN THE SYSTEM', 'MEASURE THE IMPACT']} /></div>
+    {!visual.heroBody && <div className="detail-hero-stat"><strong>{visual.stat}</strong><span>Built around your facility and priorities.</span></div>}
+    {!visual.heroBody && <div className="detail-typewriter"><span className="signal-dot" /><Typewriter phrases={['ASSESS THE FACILITY', 'DESIGN THE SYSTEM', 'MEASURE THE IMPACT']} /></div>}
   </div>;
 }
 
 function HeroMedia({ visual }: { visual: HeroVisual }) {
   return <div className="solution-detail-hero-media">
-    <div className="detail-hero-orbit" aria-hidden="true" />
+    {!visual.proof && <div className="detail-hero-orbit" aria-hidden="true" />}
     <img src={visual.image} alt={visual.alt} fetchPriority="high" decoding="async" />
-    <div className="detail-media-overlay"><span>{visual.eyebrow}</span><strong>{visual.caption}</strong></div>
+    {visual.proof && <div className="clinical-proof-badge" aria-label="Proof of execution">{visual.proof.map((item) => <span key={`${item.value}-${item.label}`}><AnimatedCounter value={item.value} suffix={item.suffix} /> {item.label}</span>)}</div>}
+    {visual.showMediaOverlay !== false && <div className="detail-media-overlay"><span>{visual.eyebrow}</span><strong>{visual.caption}</strong></div>}
   </div>;
 }
 
@@ -150,7 +194,7 @@ function SolutionDetailHero({ variant, visual, title, heroLead }: { variant: str
       {variant === 'utility' ? <><div className="hero-utility-copy">{copy}</div><div className="hero-utility-stage">{media}</div></> : null}
       {variant === 'civic' ? <><div className="hero-civic-copy">{copy}</div><div className="hero-civic-stage">{media}</div></> : null}
       {variant === 'landscape' ? <><div className="hero-landscape-stage">{media}</div><div className="hero-landscape-copy">{copy}</div></> : null}
-      {variant === 'clinical' ? <><div className="hero-clinical-copy">{copy}</div><div className="hero-clinical-stage">{media}</div></> : null}
+      {variant === 'clinical' ? <><div className="hero-clinical-copy" data-reveal>{copy}</div><div className="hero-clinical-stage" data-reveal>{media}</div></> : null}
     </div>
   </section>;
 }
@@ -158,9 +202,18 @@ function SolutionDetailHero({ variant, visual, title, heroLead }: { variant: str
 function Section({ section, index, solutionSlug, variant }: { section: SolutionSection; index: number; solutionSlug: string; variant: string }) {
   const visibleItems = section.items
     .filter((content) => !isInternalMetadata(content))
-    .filter((content) => content.kind !== 'cta' && content.kind !== 'flow');
-  const visual = section.visual === 'timeline' ? undefined : section.visual;
-  return <section className={`solution-section ss-detail-section section-layout-${variant} section-visual-${visual ?? 'text'}`} id={`section-${index + 1}`} data-reveal><div className="solution-section-head"><p className="ss-kicker"><span className="sun-pip" /> {cleanSectionKicker(section.kicker)}</p><h2>{visitorHeading(section)}</h2></div><div className="solution-section-body">{visual && <DeferredSolutionVisual kind={visual} slug={solutionSlug} items={section.items} />}<div className="solution-detail-items">{visibleItems.map((content, itemIndex) => <div className={`solution-item ${content.bullets ? 'has-bullets' : ''} ${content.kind === 'cta' ? 'is-cta' : ''}`} key={`${content.label ?? 'item'}-${itemIndex}`}>{content.kind === 'cta' ? <a className="solution-item-cta" href="mailto:customer.support@suryasangam.com">{content.text}<span>→</span></a> : <>{content.label && <p className="solution-label">{content.label}</p>}{content.text && <p className={content.kind === 'stat' ? 'solution-stat' : undefined}>{content.text}</p>}</>}{content.bullets && <ul>{content.bullets.map((value) => <li key={value}>{value}</li>)}</ul>}</div>)}</div></div></section>;
+    .filter((content) => content.kind !== 'cta' && content.kind !== 'flow')
+    .filter((content) => {
+      if (solutionSlug !== 'hospital-solarization') return true;
+      if (section.visual === 'stats' || section.visual === 'case-study') return content.kind !== 'stat';
+      if (section.visual === 'product-cards' || section.visual === 'solution-cards') return !content.label;
+      return true;
+    });
+  const visual = section.visual;
+  const sectionCtas = section.items.filter((content) => content.kind === 'cta');
+  const sectionNumber = solutionSlug === 'hospital-solarization' ? index + 2 : index + 1;
+  const keywordLine = solutionSlug === 'hospital-solarization' ? hospitalSectionKeywords[section.kicker] : undefined;
+  return <section className={`solution-section ss-detail-section section-index-${sectionNumber} section-layout-${variant} section-visual-${visual ?? 'text'}`} id={`section-${sectionNumber}`} data-reveal><div className="ss-container solution-section-inner"><div className="solution-section-head"><p className="ss-kicker"><span className="sun-pip" /> {cleanSectionKicker(section.kicker)}</p><h2>{visitorHeading(section)}</h2>{keywordLine && <p className="solution-section-keywords">{keywordLine}</p>}</div><div className="solution-section-body">{visual && <DeferredSolutionVisual kind={visual} slug={solutionSlug} items={section.items} />}<div className="solution-detail-items">{visibleItems.map((content, itemIndex) => <div className={`solution-item ${content.bullets ? 'has-bullets' : ''}`} key={`${content.label ?? 'item'}-${itemIndex}`}>{content.label && <p className="solution-label">{content.label}</p>}{content.text && <p className={content.kind === 'stat' ? 'solution-stat' : undefined}>{content.text}</p>}{content.bullets && <ul>{content.bullets.map((value) => <li key={value}>{value}</li>)}</ul>}</div>)}</div>{sectionCtas.length > 0 && <div className="solution-section-actions">{sectionCtas.map((content) => <a className="ss-button ss-button-yellow" href="mailto:customer.support@suryasangam.com" key={content.text}><CtaLabel text={content.text} /></a>)}</div>}</div></div></section>;
 }
 
 function Placeholder({ solution }: { solution: SolutionPage }) {
@@ -172,17 +225,23 @@ export default async function SolutionPageRoute({ params }: RouteProps) {
   const solution = getSolution(readSlug(slug));
   if (!solution) notFound();
   const visitorPage = getVisitorPage(solution);
-  const customerSections = visitorPage.sections
-    .filter((section) => section.kicker !== 'SEO')
-    .filter((section) => !/why surya sangam|our commitment|vision|next step|solar boardroom/i.test(section.title ?? ''))
-    .slice(0, 7);
+  const isHospital = solution.slug === 'hospital-solarization';
+  const customerSections = isHospital
+    ? visitorPage.sections
+    : visitorPage.sections
+      .filter((section) => section.kicker !== 'SEO')
+      .filter((section) => !/why surya sangam|our commitment|vision|next step|solar boardroom/i.test(section.title ?? ''))
+      .slice(0, 7);
   const heroCtas = visitorPage.sections[0]?.items.filter((item) => item.kind === 'cta').slice(0, 2) ?? [];
   const visual = heroVisuals[solution.slug] ?? heroVisuals['hospital-solarization'];
   const pageClass = `solution-page-${solution.slug.replaceAll('/', '-')}`;
   const layout = layoutVariants[solution.slug] ?? layoutVariants['hospital-solarization'];
 
   const gallery = detailMedia[solution.slug] ?? detailMedia['hospital-solarization'];
-  const pageTitle = `${solution.seoKeyword ?? solution.navLabel} | Surya Sangam`;
+  const [firstSection, ...remainingSections] = customerSections;
+  const contentSections = isHospital ? remainingSections : customerSections;
+  const contentSectionOffset = isHospital ? 1 : 0;
+  const pageTitle = solution.seoTitle ?? `${solution.seoKeyword ?? solution.navLabel} | Surya Sangam`;
   const pageDescription = solution.metaDescription ?? `${solution.navLabel} solutions from Surya Sangam, covering assessment, design, execution, monitoring and measurable impact.`;
   const relatedSolutions = allSolutions.filter((item) => item.slug !== solution.slug).slice(0, 3);
 
@@ -198,19 +257,22 @@ export default async function SolutionPageRoute({ params }: RouteProps) {
             <Link href="/solutions">Solutions</Link><span aria-hidden="true">/</span><span aria-current="page">{solution.navLabel}</span>
           </nav>
           <SolutionDetailHero variant={layout.name} visual={visual} title={solution.h1 ?? solution.title} heroLead={visitorPage.heroLead} />
+          {isHospital && firstSection && <Section section={firstSection} index={0} solutionSlug={solution.slug} variant={layout.name} />}
           <SolutionProgressNav label={solution.navLabel} />
-          <div className={`solution-media-ribbon ss-container media-ribbon-${layout.name}`} aria-label={`${solution.navLabel} media gallery`}>
-            {gallery.map((image, index) => (
-              <div className="solution-media-tile" key={image}>
-                <img src={image} alt={index === 0 ? visual.alt : `${solution.navLabel} clean-energy project visual`} loading="lazy" decoding="async" />
-                {index === 1 && <DeferredVideo poster={image} src="https://cdn.coverr.co/videos/coverr-aerial-view-of-solar-panels-1575/1080p.mp4" />}
-              </div>
-            ))}
+          <section className="solution-media-section" aria-label={`${solution.navLabel} media gallery`}>
+            <div className={`solution-media-ribbon ss-container media-ribbon-${layout.name}`}>
+              {gallery.map((image, index) => (
+                <div className="solution-media-tile" key={image}>
+                  <img src={image} alt={index === 0 ? visual.alt : `${solution.navLabel} clean-energy project visual`} loading="lazy" decoding="async" />
+                  {index === 1 && <DeferredVideo poster={image} src="https://cdn.coverr.co/videos/coverr-aerial-view-of-solar-panels-1575/1080p.mp4" />}
+                </div>
+              ))}
+            </div>
+          </section>
+          <div className={`solution-content solution-detail-content solution-content-${layout.name}`}>
+            {contentSections.map((section, index) => <Section section={section} index={index + contentSectionOffset} solutionSlug={solution.slug} variant={layout.name} key={`${section.kicker}-${index}`} />)}
           </div>
-          <div className={`solution-content ss-container solution-detail-content solution-content-${layout.name}`}>
-            {customerSections.map((section, index) => <Section section={section} index={index} solutionSlug={solution.slug} variant={layout.name} key={`${section.kicker}-${index}`} />)}
-          </div>
-          <section className="related-solutions">
+          {!isHospital && <section className="related-solutions">
             <div className="ss-container">
               <p className="ss-kicker"><span className="sun-pip" /> RELATED PATHWAYS</p>
               <h2>Explore related solar pathways</h2>
@@ -218,8 +280,8 @@ export default async function SolutionPageRoute({ params }: RouteProps) {
                 {relatedSolutions.map((item) => <Link href={item.url} key={item.slug}><span>{item.navLabel}</span><strong>Explore pathway <b>→</b></strong></Link>)}
               </div>
             </div>
-          </section>
-          <section className="solution-detail-cta">
+          </section>}
+          {!isHospital && <section className="solution-detail-cta">
             <div className="ss-container detail-cta-grid">
               <div>
                 <p className="ss-kicker light"><span className="sun-pip" /> TAKE THE NEXT STEP</p>
@@ -231,7 +293,7 @@ export default async function SolutionPageRoute({ params }: RouteProps) {
                 <Link className="ss-text-link light-link" href="/solutions">Browse all pathways <span>→</span></Link>
               </div>
             </div>
-          </section>
+          </section>}
         </main>
       )}
       <SiteFooter variant="detail" pathway={solution.navLabel} />

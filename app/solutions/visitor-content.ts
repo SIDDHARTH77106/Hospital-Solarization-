@@ -16,110 +16,113 @@ const flow = (text: string): SolutionItem => {
     steps: steps.length > 1 ? steps : undefined,
   };
 };
-const section = (kicker: string, title: string, items: SolutionItem[], visual?: SolutionVisual): SolutionSection => ({ kicker, title, items, visual });
+const section = (kicker: string, title: string | undefined, items: SolutionItem[], visual?: SolutionVisual): SolutionSection => ({ kicker, title, items, visual });
 
 /* ─────────────────── HOSPITAL SOLARIZATION ─────────────────── */
 const hospital: VisitorPage = {
   heroLead: 'Facility-specific solar for hospitals, critical loads and the communities they serve.',
   sections: [
-    section('Healthcare energy transition', 'Cleaner, more resilient power for healthcare', [
-      copy('Hospitals run around the clock. Lighting, ventilation, diagnostics, cold-chain storage and IT all need dependable power.'),
-      copy('We assess the facility, design the right system, execute the project and measure its performance.'),
-      cta('Request a Solar Assessment'),
-      cta('Talk to Our Energy Team'),
-    ]),
-    section('Powering Care', 'Powering Care in numbers', [
-      stat('Solar capacity deployed', '150 kW'),
+    section('02 — TRUST / PROOF STRIP', undefined, [
+      stat('Solar Capacity Deployed', '150 kW'),
       stat('Community Health Centres', '10'),
-      stat('Off-grid system / CHC', '15 kW'),
-      stat('Project execution', '19 days'),
+      stat('Off-Grid System / CHC', '15 kW'),
+      stat('Project Execution', '19 Days'),
       stat('Location', 'Prayagraj, Uttar Pradesh'),
-      copy('Powering Care healthcare solarization initiative.'),
+      copy('Proven through the Powering Care healthcare solarization initiative.'),
     ], 'stats'),
-    section('Why it matters', 'Healthcare runs around the clock — energy must keep up', [
-      copy('Solarization generates clean power on-site for critical healthcare services.'),
-      { label: 'What solar supports', text: '', bullets: ['Lower energy costs', 'Renewable adoption', 'More resilient infrastructure', 'Sustainability goals', 'Measured environmental impact'] },
+    section('03 — PROBLEM', 'Healthcare Never Stops. Neither Should Its Energy Infrastructure.', [
+      copy('Hospitals operate around the clock. Energy supports everything from lighting and ventilation to diagnostics, refrigeration, IT infrastructure and essential medical systems. Solarization can help healthcare institutions generate clean electricity on-site while supporting:'),
+      { label: 'What solar supports', text: '', bullets: ['Energy cost optimisation', 'Renewable-energy adoption', 'Energy resilience', 'Sustainability objectives', 'Measurable environmental impact'] },
     ]),
-    section('A complete delivery model', 'Beyond installing panels', [
-      copy('A complete path from energy assessment to design, installation, commissioning, monitoring and impact measurement.'),
-      flow('Assess → Design → Execute → Commission → Monitor → Measure'),
+    section('04 — OUR POSITIONING', 'Beyond Solar Installation', [
+      copy('Hospital solarization is not simply about installing panels. It starts with understanding the facility. Then comes system design, project execution, commissioning, monitoring and impact measurement. Surya Sangam connects the complete journey through a technology-enabled clean-energy ecosystem.'),
+      flow('ASSESS → DESIGN → EXECUTE → COMMISSION → MONITOR → MEASURE'),
     ], 'timeline'),
-    section('Proven execution', 'Powering Care — from one CHC to a wider healthcare vision', [
-      copy('Powering Care covered 10 Community Health Centres in Prayagraj. Each received a 15 kW off-grid system.'),
-      copy('Together: 150 kW deployed across 10 facilities in 19 days.'),
-      stat('Deployment', '10 CHCs × 15 kW per facility = 150 kW'),
-      stat('Execution', '19 days across 10 healthcare facilities'),
-      flow('150 kW → 10 CHCs → 19 Days'),
-      cta('View the Powering Care Case Study'),
+    section('05 — PROVEN EXECUTION', 'From One CHC to a Larger Healthcare Energy Vision', [
+      copy('Surya Sangam has already demonstrated its healthcare solarization capabilities through Powering Care, a project covering 10 Community Health Centres across Prayagraj.'),
+      copy('Each facility received a 15 kW off-grid solar system, creating a combined deployment of 150 kW. The distributed deployment was executed across the participating facilities within 19 days.'),
+      stat('Total Capacity', '10 CHCs × 15 kW Per Facility = 150 kW'),
+      stat('Project Execution', '19 DAYS'),
+      copy('From coordinated project execution to deployment across 10 healthcare facilities.'),
+      cta('View Powering Care →'),
     ], 'case-study'),
-    section('Digital energy stack', 'One connected platform for every stage', [
-      copy('Assess site data, solar potential, system size and feasibility.', 'SuryaCALC — Planning intelligence'),
-      flow('Assess → Calculate → Design'),
-      copy('Coordinate facilities, stakeholders, vendors and workflows across sites.', 'SuryaNexa — Execution at scale'),
-      flow('Coordinate → Execute → Track'),
-      copy('Track generation, performance and environmental impact after commissioning.', 'Surya Impact OS — Post-installation intelligence'),
-      flow('Monitor → Measure → Report'),
-      flow('SuryaCALC → SuryaNexa → Surya Impact OS'),
+    section('06 — DIGITAL ECOSYSTEM', 'One Digital Energy Stack. Every Stage of the Journey.', [
+      copy('SuryaCALC supports the assessment and planning stage by bringing together site and energy information to evaluate solar potential, system sizing and project feasibility.', 'SuryaCALC — Solar Intelligence Before Installation'),
+      copy('SuryaNexa provides the execution layer for multi-site solar projects, helping coordinate facilities, stakeholders, vendors, assets and project workflows.', 'SuryaNexa — Digital Execution at Scale'),
+      copy('Surya Impact OS provides the post-installation intelligence layer for monitoring solar generation, system performance and environmental impact.', 'Surya Impact OS — Monitor What Happens After Installation'),
+      cta('Explore SuryaCALC →'),
+      cta('Explore SuryaNexa →'),
+      cta('Explore Impact OS →'),
     ], 'product-cards'),
-    section('Healthcare configurations', 'Solar solutions designed around the facility', [
-      copy('The configuration follows the facility, its loads and its schedule.'),
-      copy('Use available roof space for daytime generation.', 'Rooftop Solar'),
-      copy('Independent solar and storage where grid reliability is limited.', 'Off-Grid Solar'),
-      copy('Store surplus power for evenings, outages or peak demand.', 'Solar + Battery Storage'),
-      copy('Track generation, performance and carbon savings.', 'Energy Intelligence'),
+    section('07 — HEALTHCARE SOLUTIONS', 'Solar Solutions Designed for Healthcare', [
+      copy("Every healthcare facility has a different energy profile. Surya Sangam evaluates the facility's requirements before recommending the appropriate configuration."),
+      copy('Generate clean electricity using available rooftop infrastructure.', 'Rooftop Solar'),
+      copy('Independent solar-energy infrastructure for suitable facilities and applications requiring greater energy resilience.', 'Off-Grid Solar'),
+      copy('Combine solar generation with energy storage where facility requirements and load profiles justify the configuration.', 'Solar + Battery Storage'),
+      copy('Monitor solar generation, performance and environmental impact through digital systems.', 'Energy Intelligence'),
+      copy('Final system architecture is determined after technical assessment.', 'Note'),
     ], 'solution-cards'),
-    section('Who we serve', 'Solarization across the healthcare ecosystem', [
-      { label: 'Government healthcare', text: '', bullets: ['CHCs and PHCs', 'District and government hospitals', 'Medical colleges', 'Public healthcare institutions'] },
-      { label: 'Private healthcare', text: '', bullets: ['Multi-speciality hospitals', 'Nursing homes and clinics', 'Diagnostic centres', 'Healthcare campuses'] },
-      copy('Multi-site programmes combine facility assessments with consolidated monitoring.', 'Institutional and healthcare networks'),
+    section('08 — WHO WE SERVE', 'Solarization Across the Healthcare Ecosystem', [
+      { label: 'Government Healthcare', text: '', bullets: ['Community Health Centres', 'Primary Healthcare Centres', 'District Hospitals', 'Government Hospitals', 'Medical Colleges', 'Public Healthcare Institutions'] },
+      { label: 'Private Healthcare', text: '', bullets: ['Multi-speciality Hospitals', 'Nursing Homes', 'Clinics', 'Diagnostic Centres', 'Healthcare Campuses', 'Private Medical Institutions'] },
+      copy('For organisations managing multiple facilities, Surya Sangam supports structured multi-site solarization programmes with facility-level assessment and project-level monitoring.', 'Institutional & Healthcare Networks'),
     ], 'solution-cards'),
-    section('How it works', 'From assessment to impact', [
-      copy('A structured healthcare solarization process moves from facility assessment through network scale.', 'Healthcare delivery workflow'),
-      flow('Assess ↓ Design ↓ Execute ↓ Commission ↓ Monitor ↓ Measure ↓ Scale'),
+    section('09 — HOW IT WORKS', 'From Assessment to Impact', [
+      copy('Understand energy consumption, load profile, site conditions and infrastructure.', '01 — ASSESS'),
+      copy('Develop a facility-specific solar architecture.', '02 — DESIGN'),
+      copy('Coordinate deployment through a structured project workflow.', '03 — EXECUTE'),
+      copy('Test, validate and operationalise the system.', '04 — COMMISSION'),
+      copy('Track solar generation and system performance.', '05 — MONITOR'),
+      copy('Quantify energy and environmental impact.', '06 — MEASURE'),
+      copy('Expand from individual facilities to healthcare networks.', '07 — SCALE'),
     ], 'timeline'),
-    section('Facility-specific planning', 'Designed around your hospital', [
-      copy('There is no universal solar system for healthcare. Every assessment considers the specific building and how it operates.'),
-      copy('How much electricity the facility uses, when demand peaks and how loads shift through the day.', 'Energy profile'),
-      copy('Available roof area, orientation, shading from nearby structures and space for equipment.', 'Site conditions'),
-      copy('Existing switchboards, transformers and wiring that the solar system needs to integrate with.', 'Electrical infrastructure'),
-      copy('Which loads are critical (such as ICUs, cold storage or diagnostics), how many hours the facility operates and any special power requirements.', 'Operational requirements'),
-      copy('Whether the goal is cost reduction, renewable adoption, backup resilience, sustainability compliance — or all of the above.', 'Energy objectives'),
+    section('10 — FACILITY-SPECIFIC APPROACH', 'Designed Around Your Hospital', [
+      copy('There is no one-size-fits-all solar system for healthcare. Our assessment considers:'),
+      copy('Consumption, demand and load patterns.', 'Energy Profile'),
+      copy('Roof area, orientation, shading and available installation space.', 'Site Conditions'),
+      copy('Existing electrical systems and distribution requirements.', 'Electrical Infrastructure'),
+      copy('Critical loads, operating hours and facility-specific requirements.', 'Operational Requirements'),
+      copy('Cost optimisation, renewable-energy adoption, resilience and sustainability.', 'Energy Objectives'),
+      copy('Investment requirements, project economics and potential savings.', 'Financial Parameters'),
+      copy("We don't start with a solar system. We start with the facility.", 'Closing statement'),
     ], 'solution-cards'),
-    section('Impact monitoring', 'Installation is only the beginning', [
-      copy('A solar project should remain measurable long after the panels are commissioned. Surya Impact OS helps institutions move from knowing what was installed to understanding what it is delivering.'),
-      stat('Solar generation', 'Total energy produced in kWh'),
-      stat('System performance', 'Site-by-site output and efficiency'),
-      stat('Environmental impact', 'Estimated carbon emissions avoided'),
-      stat('Project impact', 'Facility- and programme-level outcomes'),
+    section('11 — IMPACT MONITORING', 'Installation Is Not the End.', [
+      copy('A solar project should remain measurable after commissioning. With Surya Impact OS, institutions can move from knowing: "What was installed?" to understanding: "What is it delivering?"'),
+      stat('Solar Generation', 'Energy generated'),
+      stat('System Performance', 'Site-wise performance'),
+      stat('Environmental Impact', 'Estimated emissions avoided'),
+      stat('Project Impact', 'Facility and programme-level outcomes'),
     ], 'stats'),
-    section('Scale and vision', 'From one hospital to an energy network', [
-      copy('The future of healthcare energy is not about solarizing one building at a time. It is about creating connected, measurable clean-energy infrastructure across entire healthcare networks — a hospital, a district, a state.'),
+    section('12 — SCALE / VISION', 'From One Hospital to an Energy Network', [
+      copy('The future of healthcare energy is not about solarizing one building at a time. It is about creating connected, measurable and scalable clean-energy infrastructure across healthcare networks. A hospital. A district. A healthcare network. A state-wide programme. Surya Sangam is building the technology and execution ecosystem to support that transition.'),
       flow('ASSESS ONE FACILITY → EXECUTE ACROSS A NETWORK → MONITOR EVERY ASSET → MEASURE THE IMPACT'),
     ], 'timeline'),
-    section('Why Surya Sangam', 'Built for healthcare energy programmes', [
-      copy('Digital tools support every stage — from initial assessment through post-installation monitoring.', 'Technology-led'),
-      copy('Structured project workflows enable coordinated deployment across multiple facilities.', 'Execution-focused'),
-      copy('Solutions are designed around how healthcare facilities actually operate — not around a generic template.', 'Healthcare-aware'),
-      copy('Generation, performance and environmental outcomes are tracked with real data.', 'Data-driven'),
-      copy('The approach works for a single facility or a network-wide programme.', 'Multi-site capable'),
-      copy('The focus extends beyond installation to measurable energy and environmental impact.', 'Impact-oriented'),
+    section('13 — WHY SURYA SANGAM', undefined, [
+      copy('Digital intelligence across assessment, execution and impact monitoring.', 'Technology-led'),
+      copy('Structured workflows for distributed clean-energy deployment.', 'Execution-focused'),
+      copy('Solutions designed around healthcare infrastructure and operational requirements.', 'Healthcare-aware'),
+      copy('Measure generation, performance and environmental outcomes.', 'Data-driven'),
+      copy('Designed to support individual facilities and larger institutional programmes.', 'Multi-site capable'),
+      copy('Go beyond installation to measurable energy and environmental impact.', 'Impact-oriented'),
     ], 'solution-cards'),
-    section('Case study', 'Powering Care — Solarization of 10 Community Health Centres', [
-      copy('Powering Care demonstrates Surya Sangam\'s approach to combining clean-energy infrastructure, digital project workflows and impact monitoring for public healthcare.'),
-      stat('Facilities', '10 Community Health Centres'),
-      stat('Capacity', '150 kW off-grid solar'),
-      stat('System size', '15 kW / CHC'),
-      stat('Delivery', '19-day deployment'),
-      cta('Explore the Powering Care Case Study'),
+    section('14 — CASE STUDY', 'POWERING CARE', [
+      copy('Solarization of 10 Community Health Centres — Prayagraj', 'Case Study'),
+      stat('Facilities', '10 CHCs'),
+      stat('Capacity', '150 kW'),
+      stat('System Size', '15 kW / CHC'),
+      stat('Delivery', '19 DAYS'),
+      copy("Powering Care demonstrates Surya Sangam's approach to combining clean-energy infrastructure, digital project workflows and impact monitoring for public healthcare."),
+      cta('Explore the Powering Care Case Study →'),
     ], 'case-study'),
-    section('Next step', 'Ready to solarize your healthcare facility?', [
-      copy('Whether you operate a government health centre, private hospital, diagnostic centre or healthcare network, Surya Sangam can help evaluate the opportunity.'),
-      copy('Tell us about your facility, location and energy requirements. Our team will assess the solar potential for you.'),
+    section('15 — CTA', 'Ready to Solarize Your Healthcare Facility?', [
+      copy('Whether you operate a government health facility, private hospital, diagnostic centre or healthcare network, Surya Sangam can help evaluate your solarization opportunity.'),
       cta('Request a Solar Assessment'),
       cta('Talk to Surya Sangam'),
+      copy('Tell us about your facility, location and energy requirements. Our team will assess the opportunity for you.'),
     ]),
-    section('Our commitment', 'Powering healthcare. Powering communities. Powering the energy transition.', [
-      copy('Surya Sangam is an Alarth Green platform for intelligent clean-energy transition.'),
+    section('16 — FINAL BRAND STATEMENT', 'POWERING HEALTHCARE. POWERING COMMUNITIES. POWERING THE ENERGY TRANSITION.', [
+      copy('Surya Sangam', 'Brand'),
+      copy('An Alarth Green platform for intelligent clean-energy transition.', 'Brand'),
     ]),
   ],
 };

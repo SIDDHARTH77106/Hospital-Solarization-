@@ -643,3 +643,295 @@ img,video,svg{max-width:100%}
 
 .calc-preview strong,.calc-preview small{overflow-wrap:anywhere}
 .input-row button:disabled{cursor:wait;opacity:.62}
+
+/* Let homepage photography sit directly on the page grid instead of inside
+   gray frames or gradient masks. Readability comes from restrained shadows
+   on the copy, not a banner over the image. */
+.ss-hero{background-color:#fff;background-image:linear-gradient(rgba(46,118,208,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(46,118,208,.035) 1px,transparent 1px);background-size:44px 44px;background-position:center top}
+.ss-hero-media,.media-journey-card,.offering-feature,.story-media{border-radius:0;background:transparent;box-shadow:none;filter:drop-shadow(0 16px 28px rgba(20,53,92,.1))}
+.ss-hero-media{overflow:visible}
+.media-journey-card,.offering-feature,.story-media{overflow:hidden}
+.ss-hero-media:after,.media-journey-card:after,.offering-feature:after,.story-media:after{display:none}
+.ss-hero-media>img,.media-journey-card>img,.media-journey-card video,.offering-feature>img,.story-media img{object-fit:cover;object-position:center;background:transparent}
+.media-journey-card .deferred-video-shell{background:transparent;border-radius:0}
+.ss-image-badge{padding:0;background:transparent;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;color:#fff;text-shadow:0 2px 12px rgba(8,32,71,.62)}
+.ss-image-badge small{color:#fff}
+.ss-image-caption,.offering-overlay,.story-media span{text-shadow:0 2px 14px rgba(8,32,71,.72)}
+.offering-tag{padding:0;border-radius:0;background:transparent;color:#fbd871;text-shadow:0 2px 10px rgba(8,32,71,.72)}
+
+/* Keep photographic assets consistent across the directory and detail pages. */
+.directory-card-image{background:transparent}
+.directory-card-image:after{display:none}
+.directory-card-image img{object-fit:cover;background:transparent}
+.ss-solution-detail .solution-detail-hero-media,.ss-solution-detail .solution-media-tile{border:0;border-radius:0;background:transparent;box-shadow:none;filter:drop-shadow(0 16px 28px rgba(20,53,92,.1))}
+.ss-solution-detail .solution-detail-hero-media:after,.ss-solution-detail .solution-media-tile:after{display:none}
+.ss-solution-detail .solution-detail-hero-media img,.ss-solution-detail .solution-media-tile img,.ss-solution-detail .solution-media-tile video{object-fit:cover;background:transparent}
+.ss-solution-detail .solution-media-tile:nth-child(2) img{opacity:1}
+.detail-media-overlay{padding:0;background:transparent;border:0;border-radius:0;backdrop-filter:none;-webkit-backdrop-filter:none;text-shadow:0 2px 14px rgba(8,32,71,.72)}
+
+/* Hospital Solarization: a clinical, proof-led layout with open whitespace. */
+.solution-page-hospital-solarization{background:#fff}
+body:has(.solution-page-hospital-solarization)::before{display:none}
+.solution-page-hospital-solarization .solution-detail-hero-clinical{background-color:#fff;background-image:linear-gradient(rgba(46,118,208,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(46,118,208,.035) 1px,transparent 1px);background-size:44px 44px;background-position:center top}
+.solution-page-hospital-solarization .solution-detail-hero:before,.solution-page-hospital-solarization .solution-detail-hero-copy:after{display:none}
+.solution-page-hospital-solarization .solution-detail-hero-media{transform:none;filter:drop-shadow(0 18px 30px rgba(20,53,92,.12))}
+.clinical-proof-badge{position:absolute;z-index:2;left:20px;top:20px;display:flex;flex-wrap:wrap;gap:6px 14px;max-width:calc(100% - 40px);color:#fff;font:700 9px/1.4 var(--ss-mono);letter-spacing:.08em;text-transform:uppercase;text-shadow:0 2px 12px rgba(8,32,71,.72)}
+.clinical-proof-badge span+span:before{content:'·';margin-right:14px;color:#fbd36c}
+.solution-page-hospital-solarization .solution-detail-rail,.solution-page-hospital-solarization .solution-media-ribbon,.solution-page-hospital-solarization .ss-detail-section:before{background:transparent}
+.solution-page-hospital-solarization .solution-media-ribbon:before{display:none}
+.solution-page-hospital-solarization .solution-section-visual,.solution-page-hospital-solarization .solution-visual-stat-grid,.solution-page-hospital-solarization .solution-visual-card-grid{filter:none;background:transparent;border:0;border-radius:0}
+.solution-page-hospital-solarization .solution-visual-stat-grid{gap:22px;overflow:visible}
+.solution-page-hospital-solarization .solution-visual-stat{min-height:0;padding:20px 0;background:transparent;border:0;border-radius:0;box-shadow:none}
+.solution-page-hospital-solarization .solution-visual-stat:hover{background:transparent}
+.solution-page-hospital-solarization .solution-visual-card-grid{gap:28px}
+.solution-page-hospital-solarization .solution-visual-card{min-height:0;padding:24px 0;background:transparent;border:0;border-top:1px solid #dce5ee;border-radius:0;box-shadow:none}
+.solution-page-hospital-solarization .solution-visual-card:hover{transform:none;box-shadow:none}
+.solution-page-hospital-solarization .solution-visual-card.is-active{border-top-color:var(--ss-blue)}
+.solution-page-hospital-solarization .ss-detail-section .solution-item:not(.is-cta){background:transparent;border:0;border-radius:0;box-shadow:none;padding-inline:0}
+
+/* Hospital interactions stay data-led and transparent: the state changes use
+   type, hairlines and the progress rule instead of cards, masks or gradients. */
+.solution-page-hospital-solarization .hero-detail-body{margin-top:16px!important;color:#5d6e86!important;font-size:13px!important;line-height:1.8!important}
+.solution-page-hospital-solarization .solution-section-keywords{margin:15px 0 0;color:#8291a4;font:700 8px/1.65 var(--ss-mono);letter-spacing:.075em;text-transform:uppercase}
+.solution-page-hospital-solarization .clinical-proof-badge{letter-spacing:.055em}
+.solution-page-hospital-solarization .solution-section-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:27px;padding-top:20px;border-top:1px solid #dce5ee}
+.solution-page-hospital-solarization .solution-section-actions .ss-button{min-height:44px}
+.product-ecosystem{width:100%;background:transparent}
+.product-ecosystem-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.product-ecosystem-tabs button{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 0 13px;border:0;border-bottom:1px solid #dce5ee;background:transparent;color:#718097;text-align:left;font:700 11px/1.3 var(--ss-mono);letter-spacing:.02em;cursor:pointer;transition:color .2s ease,border-color .2s ease}
+.product-ecosystem-tabs button span{color:#a0aec0;font-size:9px}
+.product-ecosystem-tabs button:hover,.product-ecosystem-tabs button.is-active{border-color:var(--ss-blue);color:var(--deep)}
+.product-ecosystem-tabs button.is-active span{color:var(--ss-blue)}
+.product-ecosystem-stage{min-height:170px;padding:25px 0 22px;border-bottom:1px solid #dce5ee}
+.product-ecosystem-stage h3{margin:8px 0 10px;color:var(--deep);font:700 clamp(25px,3vw,38px)/1.05 var(--ss-display);letter-spacing:-.055em}
+.product-ecosystem-subheading{margin:0 0 10px!important;color:var(--deep)!important;font:700 10px var(--ss-mono)!important;letter-spacing:.07em;text-transform:uppercase}
+.product-ecosystem-stage p:not(.solution-visual-heading){max-width:650px;margin:0;color:#5d6e86;font-size:13px;line-height:1.75}
+.product-ecosystem-stage>strong{display:block;margin-top:18px;color:var(--ss-blue);font:700 10px var(--ss-mono);letter-spacing:.08em}
+.product-ecosystem-progress{height:2px;margin-top:16px;background:#e5ebf2;overflow:hidden}
+.product-ecosystem-progress span{display:block;height:100%;background:var(--ss-blue);transition:width .35s ease}
+.solution-page-hospital-solarization .solution-visual-timeline{padding:8px 0 4px;background:transparent;border:0;border-radius:0;filter:none}
+.solution-page-hospital-solarization .solution-visual-timeline-step{min-height:48px;padding:10px 0;border-bottom:1px solid #dce5ee}
+.solution-page-hospital-solarization .solution-visual-timeline-node{background:transparent;box-shadow:none;color:var(--ss-blue);border:0;font:700 10px var(--ss-mono)}
+.solution-page-hospital-solarization .solution-visual-timeline-step strong{color:var(--deep);font:700 12px var(--ss-mono);letter-spacing:.07em}
+.solution-page-hospital-solarization .solution-visual-timeline-step:hover .solution-visual-timeline-node{background:transparent;color:var(--ss-blue);box-shadow:none}
+.powering-care-visual{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(180px,.85fr);gap:0 26px;align-items:start}
+.powering-care-map{position:relative;min-height:270px;border-top:1px solid #dce5ee;border-bottom:1px solid #dce5ee;background-color:transparent;background-image:linear-gradient(rgba(46,118,208,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(46,118,208,.045) 1px,transparent 1px);background-size:34px 34px}
+.powering-care-map-label{position:absolute;top:13px;left:0;color:#8291a4;font:700 8px var(--ss-mono);letter-spacing:.08em}
+.powering-care-map-axis{position:absolute;left:9%;right:9%;top:54%;border-top:1px dashed #cbd8e5;transform:rotate(-17deg);transform-origin:center;pointer-events:none}
+.powering-care-map button{position:absolute;z-index:1;display:grid;place-items:center;width:29px;height:29px;margin:-14px 0 0 -14px;border:1px solid #a9c8e8;border-radius:50%;background:#fff;color:var(--ss-blue);font:700 8px var(--ss-mono);cursor:pointer;transition:background-color .2s ease,color .2s ease,transform .2s ease,border-color .2s ease}
+.powering-care-map button:hover,.powering-care-map button.is-active{border-color:var(--ss-blue);background:var(--ss-blue);color:#fff;transform:scale(1.12)}
+.powering-care-map-detail{grid-column:2;grid-row:1;align-self:end;padding:0 0 20px}
+.powering-care-map-detail strong{display:block;color:var(--deep);font:700 clamp(22px,3vw,36px)/1 var(--ss-display);letter-spacing:-.055em}
+.powering-care-map-detail span{display:block;margin-top:10px;color:#65758c;font-size:11px;line-height:1.6}
+.powering-care-visual>.solution-visual-stat-grid{grid-column:1/-1;margin-top:24px}
+.solution-page-hospital-solarization .section-index-16{border-bottom:0;padding-top:105px;padding-bottom:120px}
+.solution-page-hospital-solarization .section-index-16 .solution-section-head h2{max-width:850px;font-size:clamp(42px,6.4vw,84px);line-height:.98}
+.solution-page-hospital-solarization .section-index-16 .solution-detail-items{display:block}
+.solution-page-hospital-solarization .section-index-16 .solution-item{margin-top:20px!important}
+.solution-page-hospital-solarization .section-index-16 .solution-item .solution-label{color:var(--deep)}
+.solution-page-hospital-solarization .section-index-16 .solution-item p:not(.solution-label){color:#65758c;font-size:14px}
+
+@media(max-width:620px){
+  .product-ecosystem-tabs{gap:10px}
+  .product-ecosystem-tabs button{display:block;min-height:56px;padding-bottom:10px;font-size:9px}
+  .product-ecosystem-tabs button span{display:block;margin-bottom:5px}
+  .solution-page-hospital-solarization .solution-section-actions{align-items:stretch;flex-direction:column}
+  .solution-page-hospital-solarization .solution-section-actions .ss-button{width:100%;justify-content:space-between}
+  .powering-care-visual{display:block}
+  .powering-care-map-detail{padding:20px 0 0}
+  .powering-care-visual>.solution-visual-stat-grid{margin-top:20px}
+  .solution-page-hospital-solarization .section-index-16{padding-top:75px;padding-bottom:80px}
+}
+
+/* Hospital Solarization layout cleanup: remove the generic left-rail template
+   composition and let the approved content breathe across the full grid. */
+.solution-page-hospital-solarization .ss-detail-section{display:block;grid-template-columns:none;padding:88px 0}
+.solution-page-hospital-solarization .ss-detail-section .solution-section-head:before{display:none}
+.solution-page-hospital-solarization .solution-section-head{max-width:920px;margin:0 0 38px}
+.solution-page-hospital-solarization .solution-section-head h2{max-width:900px}
+.solution-page-hospital-solarization .solution-section-body{width:100%;max-width:none}
+.solution-page-hospital-solarization .solution-detail-items{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 34px}
+.solution-page-hospital-solarization .solution-detail-items .solution-item.has-bullets{grid-column:1/-1}
+.solution-page-hospital-solarization .section-index-2{padding-top:28px;padding-bottom:38px}
+.solution-page-hospital-solarization .section-index-2 .solution-section-head{display:none}
+.solution-page-hospital-solarization .section-index-2 .solution-detail-items{grid-template-columns:repeat(5,minmax(0,1fr));gap:26px}
+.solution-page-hospital-solarization .section-index-2 .solution-item{border-top:1px solid #dce5ee!important;padding-top:18px!important}
+.solution-page-hospital-solarization .section-index-16 .solution-section-head{max-width:1080px;margin:0 auto 42px;text-align:center}
+.solution-page-hospital-solarization .section-index-16 .solution-section-head h2{max-width:1080px;margin-inline:auto}
+.solution-page-hospital-solarization .section-index-16 .solution-section-head h2:after{margin-inline:auto}
+.solution-page-hospital-solarization .section-index-16 .solution-detail-items{max-width:620px;margin:0 auto;text-align:center}
+.solution-page-hospital-solarization .section-index-16 .solution-item .solution-label{margin-bottom:8px}
+
+@media(max-width:850px){
+  .solution-page-hospital-solarization .solution-detail-items{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .solution-page-hospital-solarization .section-index-2 .solution-detail-items{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+@media(max-width:620px){
+  .solution-page-hospital-solarization .ss-detail-section{padding:64px 0}
+  .solution-page-hospital-solarization .solution-section-head{margin-bottom:27px}
+  .solution-page-hospital-solarization .solution-detail-items,.solution-page-hospital-solarization .section-index-2 .solution-detail-items{grid-template-columns:1fr;gap:0}
+  .solution-page-hospital-solarization .section-index-2{padding-top:18px;padding-bottom:24px}
+  .solution-page-hospital-solarization .section-index-2 .solution-item{padding-top:15px!important;margin-top:0!important}
+}
+
+/* Premium enterprise visual reset. Remove the notebook treatment and use a
+   system sans stack so the information reads like an institutional platform. */
+:root{--sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--display:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--ss-display:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--mono:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{font-family:var(--sans)}
+.ss-hero{background:#fff!important;background-image:none!important}
+
+/* Larger, calmer navigation with legible enterprise actions. */
+:root{--site-header-height:84px}
+.site-header-modern{height:var(--site-header-height);padding-inline:max(32px,calc((100% - 1180px)/2));background:rgba(255,255,255,.97);border-bottom:1px solid #e7ebf0;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.site-header-modern .brand{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.09em}
+.site-header-modern .brand-mark{width:32px;height:32px}
+.site-header-modern .ss-main-nav{gap:32px;font-family:var(--sans);font-size:14px}
+.site-header-modern .ss-nav-primary-links{gap:29px}
+.site-header-modern .ss-nav-primary-links>a,.site-header-modern .solutions-nav-trigger{min-height:48px;color:#33445a;font-family:var(--sans);font-size:14px;font-weight:700;letter-spacing:-.01em}
+.site-header-modern .ss-nav-primary-links>a{display:flex;align-items:center}
+.site-header-modern .solutions-nav-trigger{padding:0;border:0;background:transparent;cursor:pointer}
+.site-header-modern .ss-nav-contact{min-height:48px;padding:13px 19px;border-radius:9px;background:#0e2445;border-color:#0e2445;font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:-.01em;box-shadow:0 8px 18px rgba(14,36,69,.13)}
+.site-header-modern .ss-nav-contact:hover{background:#1e5fb7;border-color:#1e5fb7;box-shadow:0 12px 24px rgba(30,95,183,.2)}
+
+/* Hospital page: solid white canvas, no grid, dots, ruled section skins or
+   notebook-like component borders. */
+.solution-page-hospital-solarization{background:#fff!important;background-image:none!important;font-family:var(--sans)}
+.solution-page-hospital-solarization .solution-detail-hero-clinical{background:#fff!important;background-image:none!important}
+.solution-page-hospital-solarization .solution-detail-rail{border:0;background:#fff}
+.solution-page-hospital-solarization .ss-detail-section{border-bottom:0}
+.solution-page-hospital-solarization .solution-section-actions{border-top:0;padding-top:8px}
+.solution-page-hospital-solarization .solution-visual-card{border-top:0!important}
+.solution-page-hospital-solarization .solution-visual-timeline-step{border-bottom:0}
+.solution-page-hospital-solarization .product-ecosystem-tabs button{border-bottom:0}
+.solution-page-hospital-solarization .product-ecosystem-stage{border-bottom:0}
+.solution-page-hospital-solarization .product-ecosystem-progress{background:#edf1f5}
+.solution-page-hospital-solarization .powering-care-map{background:#fff!important;background-image:none!important;border:0}
+.solution-page-hospital-solarization .powering-care-map-axis{border-top-color:#d6e1ec}
+.solution-page-hospital-solarization .solution-visual-stat-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:0;background:transparent;border:0;border-radius:0}
+.solution-page-hospital-solarization .solution-visual-stat{padding:20px 20px 20px 0;background:transparent;border:0;border-radius:0;box-shadow:none}
+.solution-page-hospital-solarization .solution-visual-stat span{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.01em;text-transform:none;color:#64748b}
+.solution-page-hospital-solarization .solution-visual-stat strong{font-family:var(--display);font-size:clamp(24px,2.6vw,40px);font-weight:800;letter-spacing:-.055em;color:#0e2445}
+.solution-page-hospital-solarization .solution-section-head h2{font-family:var(--display);font-size:clamp(36px,4.3vw,62px);font-weight:800;line-height:1.03;letter-spacing:-.065em;color:#0e2445}
+.solution-page-hospital-solarization .solution-section-head h2:after{background:#1e5fb7!important}
+.solution-page-hospital-solarization .solution-section-head .ss-kicker,.solution-page-hospital-solarization .solution-section-keywords{font-family:var(--sans);font-weight:800;letter-spacing:.08em}
+.solution-page-hospital-solarization .solution-item .solution-label,.solution-page-hospital-solarization .solution-item p,.solution-page-hospital-solarization .solution-item li,.solution-page-hospital-solarization .solution-visual-timeline-step strong{font-family:var(--sans)}
+.solution-page-hospital-solarization .solution-item .solution-label{font-size:11px;font-weight:800;letter-spacing:.02em;text-transform:none;color:#1e5fb7}
+.solution-page-hospital-solarization .solution-item p:not(.solution-label),.solution-page-hospital-solarization .solution-item li{font-size:14px;line-height:1.8;color:#50627a}
+.solution-page-hospital-solarization .solution-visual-timeline-step strong{font-size:13px;font-weight:800;letter-spacing:.01em;text-transform:none;color:#0e2445}
+.solution-page-hospital-solarization .solution-visual-timeline-node{font-family:var(--sans);font-size:11px;font-weight:800}
+.solution-page-hospital-solarization .clinical-proof-badge{font-family:var(--sans);font-size:11px;font-weight:800;letter-spacing:.02em;text-transform:none}
+
+@media(max-width:850px){
+  :root{--site-header-height:76px}
+  .site-header-modern{height:var(--site-header-height);padding-inline:22px}
+  .site-header-modern .ss-main-nav{font-family:var(--sans)}
+  .site-header-modern .ss-nav-primary-links>a{font-size:17px}
+  .site-header-modern .ss-nav-contact{font-size:15px}
+  .solution-page-hospital-solarization .solution-visual-stat-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+@media(max-width:620px){
+  :root{--site-header-height:70px}
+  .site-header-modern{height:var(--site-header-height);padding-inline:17px}
+  .site-header-modern .ss-main-nav{top:100%;max-height:calc(100dvh - var(--site-header-height));padding:20px 18px 28px}
+  .site-header-modern .solution-page-hospital-solarization .ss-main-nav{font-size:16px}
+  .solution-page-hospital-solarization .solution-visual-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px}
+  .solution-page-hospital-solarization .solution-visual-stat{padding:18px 0}
+}
+
+/* Motion polish: restrained opacity/translate transitions with no bounce. */
+.solution-page-hospital-solarization [data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.22,.7,.2,1),transform .8s cubic-bezier(.22,.7,.2,1);transition-delay:var(--delay,0ms)}
+.solution-page-hospital-solarization [data-reveal].is-visible{opacity:1;transform:none}
+.solution-page-hospital-solarization .solution-visual-stat{opacity:0;transform:translateY(14px);transition:opacity .65s cubic-bezier(.22,.7,.2,1),transform .65s cubic-bezier(.22,.7,.2,1),box-shadow .25s ease}
+.solution-page-hospital-solarization .ss-detail-section.is-visible .solution-visual-stat{opacity:1;transform:none}
+.solution-page-hospital-solarization .ss-detail-section.is-visible .solution-visual-stat:nth-child(2){transition-delay:70ms}
+.solution-page-hospital-solarization .ss-detail-section.is-visible .solution-visual-stat:nth-child(3){transition-delay:140ms}
+.solution-page-hospital-solarization .ss-detail-section.is-visible .solution-visual-stat:nth-child(4){transition-delay:210ms}
+.solution-page-hospital-solarization .ss-detail-section.is-visible .solution-visual-stat:nth-child(5){transition-delay:280ms}
+.solution-page-hospital-solarization .solution-visual-stat:hover{transform:translateY(-4px);box-shadow:0 12px 24px rgba(14,36,69,.08)}
+.solution-page-hospital-solarization .solution-visual-card{transition:transform .3s cubic-bezier(.22,.7,.2,1),box-shadow .3s ease,color .2s ease}
+.solution-page-hospital-solarization .solution-visual-card:hover,.solution-page-hospital-solarization .solution-visual-card:focus-visible,.solution-page-hospital-solarization .solution-visual-card.is-active{transform:translateY(-4px);box-shadow:0 14px 28px rgba(14,36,69,.09)}
+.solution-page-hospital-solarization .solution-visual-card:focus-visible,.solution-page-hospital-solarization .powering-care-map button:focus-visible,.solution-page-hospital-solarization .product-ecosystem-tabs button:focus-visible{outline:3px solid rgba(30,95,183,.28);outline-offset:4px}
+.solution-page-hospital-solarization .solution-detail-hero-copy:before{display:none}
+.solution-page-hospital-solarization .ss-button{transition:transform .28s cubic-bezier(.22,.7,.2,1),box-shadow .28s ease,background-color .2s ease}
+.solution-page-hospital-solarization .ss-button:hover,.solution-page-hospital-solarization .ss-button:focus-visible{transform:translateY(-3px);box-shadow:0 14px 26px rgba(14,36,69,.16)}
+.solution-page-hospital-solarization .powering-care-map button{transition:transform .28s cubic-bezier(.22,.7,.2,1),background-color .2s ease,color .2s ease,border-color .2s ease,box-shadow .28s ease}
+.solution-page-hospital-solarization .powering-care-map button:hover,.solution-page-hospital-solarization .powering-care-map button.is-active{box-shadow:0 8px 16px rgba(30,95,183,.2)}
+
+@media(max-width:620px){
+  .solution-page-hospital-solarization .ss-container{width:calc(100% - 32px)}
+  .solution-page-hospital-solarization .solution-section-head h2{font-size:clamp(34px,10vw,48px);line-height:1.04}
+  .solution-page-hospital-solarization .product-ecosystem-tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .solution-page-hospital-solarization .product-ecosystem-tabs button{min-width:0;overflow-wrap:anywhere;word-break:normal;font-size:9px;line-height:1.35}
+  .solution-page-hospital-solarization .powering-care-map{min-height:230px}
+  .solution-page-hospital-solarization .powering-care-map button{width:26px;height:26px;margin:-13px 0 0 -13px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .solution-page-hospital-solarization [data-reveal],.solution-page-hospital-solarization .solution-visual-stat{opacity:1;transform:none;transition:none}
+}
+
+/* Structural layout pass: each detail chapter owns a full-width section and
+   an independent centered content rail. This keeps long-form solution pages
+   from behaving like one narrow document column. */
+.solution-content{width:100%}
+.solution-media-section{width:100%;background:#fff}
+.ss-detail-section{display:block;width:100%;padding:clamp(78px,9vw,132px) 0;border-bottom:0}
+.solution-section-inner{display:grid;grid-template-columns:minmax(220px,.64fr) minmax(0,1.36fr);gap:clamp(38px,6vw,88px);align-items:start}
+.ss-detail-section .solution-section-head{min-width:0}
+.ss-detail-section .solution-section-head h2{max-width:none}
+.ss-detail-section .solution-section-body{display:grid;grid-template-columns:minmax(0,1fr);gap:30px;min-width:0}
+.solution-section-visual{grid-column:1/-1}
+.ss-detail-section .solution-detail-items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 34px;min-width:0}
+.ss-detail-section .solution-detail-items>*{min-width:0}
+
+/* Hospital pages read as centered chapters, with the proof strip treated as
+   a true full-width metric band immediately below the hero. */
+.solution-page-hospital-solarization .ss-detail-section:not(.section-index-2) .solution-section-inner{grid-template-columns:1fr;gap:42px}
+.solution-page-hospital-solarization .ss-detail-section:not(.section-index-2) .solution-section-head{max-width:930px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center}
+.solution-page-hospital-solarization .ss-detail-section:not(.section-index-2) .solution-section-body{width:100%;max-width:1080px;margin:0 auto}
+.solution-page-hospital-solarization .section-index-2{padding:34px 0 42px;background:#f7faff;border-top:1px solid #e6edf6;border-bottom:1px solid #e6edf6}
+.solution-page-hospital-solarization .section-index-2 .solution-section-inner{display:block}
+.solution-page-hospital-solarization .section-index-2 .solution-section-head{display:flex;justify-content:center;margin-bottom:20px}
+.solution-page-hospital-solarization .section-index-2 .solution-section-head h2{margin-top:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#64748b}
+.solution-page-hospital-solarization .section-index-2 .solution-section-head h2:after{display:none}
+.solution-page-hospital-solarization .section-index-2 .solution-section-body{display:block;max-width:1180px;margin:0 auto}
+.solution-page-hospital-solarization .section-index-2 .solution-detail-items{display:block;text-align:center;margin-top:18px}
+.solution-page-hospital-solarization .section-index-2 .solution-detail-items .solution-item{border:0;padding:0}
+.solution-page-hospital-solarization .section-index-2 .solution-visual-stat-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:0}
+.solution-page-hospital-solarization .section-index-2 .solution-visual-stat{padding:14px clamp(12px,2vw,26px);border-left:1px solid #d9e4f0}
+.solution-page-hospital-solarization .section-index-2 .solution-visual-stat:first-child{border-left:0}
+
+/* Give the problem chapter an intentional split: context on the left,
+   scannable support cards on the right. */
+.solution-page-hospital-solarization .section-index-3 .solution-section-body{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(28px,5vw,72px);align-items:start}
+.solution-page-hospital-solarization .section-index-3 .solution-detail-items{display:contents}
+.solution-page-hospital-solarization .section-index-3 .solution-item:first-child{grid-column:1;grid-row:1;border-top:0;padding:0;font-size:18px}
+.solution-page-hospital-solarization .section-index-3 .solution-item.has-bullets{grid-column:2;grid-row:1}
+.solution-page-hospital-solarization .section-index-3 .solution-item.has-bullets ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0;padding:0;list-style:none}
+.solution-page-hospital-solarization .section-index-3 .solution-item.has-bullets li{padding:16px;border:1px solid #dfe8f2;border-radius:12px;background:#fff;box-shadow:0 10px 22px rgba(14,36,69,.05)}
+.solution-page-hospital-solarization .section-index-3 .solution-item.has-bullets li::marker{display:none}
+
+@media(max-width:850px){
+  .solution-section-inner{grid-template-columns:minmax(170px,.5fr) minmax(0,1.5fr);gap:34px}
+  .solution-page-hospital-solarization .section-index-2 .solution-visual-stat-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+@media(max-width:620px){
+  .ss-detail-section{padding:62px 0}
+  .solution-section-inner{display:block}
+  .ss-detail-section .solution-section-head{margin-bottom:28px}
+  .ss-detail-section .solution-section-body{display:block}
+  .ss-detail-section .solution-detail-items{display:block}
+  .ss-detail-section .solution-detail-items>*{margin-top:18px}
+  .ss-detail-section .solution-detail-items>*:first-child{margin-top:0}
+  .solution-page-hospital-solarization .section-index-2{padding:28px 0 34px}
+  .solution-page-hospital-solarization .section-index-2 .solution-section-head{margin-bottom:12px}
+  .solution-page-hospital-solarization .section-index-2 .solution-visual-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}
+  .solution-page-hospital-solarization .section-index-2 .solution-visual-stat{padding:16px 0;border-left:0;border-bottom:1px solid #d9e4f0;text-align:left}
+  .solution-page-hospital-solarization .section-index-2 .solution-visual-stat:nth-last-child(-n+2){border-bottom:0}
+  .solution-page-hospital-solarization .section-index-3 .solution-section-body{display:block}
+  .solution-page-hospital-solarization .section-index-3 .solution-detail-items{display:block}
+  .solution-page-hospital-solarization .section-index-3 .solution-item.has-bullets ul{grid-template-columns:1fr}
+}
